@@ -482,7 +482,7 @@ $.widget( "ui.tapestryZone", {
                 $.tapestry.utils.loadScriptsInReply(data);
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert(textStatus);
+                Tapestry.error(textStatus);
             }
         };
         if (this.options.parameters) {
