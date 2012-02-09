@@ -857,13 +857,7 @@ $.tapestry = {
             var redirectURL = reply.redirectURL;
             
             if (redirectURL) {
-                // Check for complete URL.
-                if (/^https?:/.test(redirectURL)) {
-                    window.location = redirectURL;
-                    return;
-                }
-                
-                window.location.pathname = redirectURL;
+                window.location.href = redirectURL;
                 
                 // Don't bother loading scripts or invoking the callback.
                 return;
