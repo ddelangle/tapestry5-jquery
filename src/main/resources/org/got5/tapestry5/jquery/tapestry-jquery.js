@@ -105,6 +105,20 @@ $.extend(Tapestry, {
             }
         });
         */
+        //Init scripts loaded from script elements
+        var virtualScripts = $('html').data(Tapestry.VIRTUAL_SCRIPTS);
+
+        if (!virtualScripts) {
+            virtualScripts = [];
+        }
+        $('script[src]').each(function(i, script) {
+            path = $(script).attr('src');
+            var url = $.tapestry.utils.rebuildURL(path);
+            if($.inArray(url, virtualScripts) === -1) {
+            	virtualScripts.push(url);
+            }
+        });
+        $('html').data(Tapestry.VIRTUAL_SCRIPTS, virtualScripts);
         
     }
 });
