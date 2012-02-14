@@ -838,7 +838,7 @@ $.tapestry = {
         addStylesheets: function(stylesheets) {
             if (stylesheets) {
                 $.each(stylesheets, function(i, s) {
-                    var assetURL = $.tapestry.utils.rebuildURL(s.href);
+                    var assetURL = s.href;
                     
                     if ($('head link[href="' + assetURL + '"]').size() === 0) {
                     
