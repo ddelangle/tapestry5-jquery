@@ -75,7 +75,7 @@ $.extend(Tapestry, {
         	
             if (!element.data("observingFocusChange")) {
                 element.focus(function() {
-                    if (element != Tapestry.currentFocusField) {
+                    if (element[0] != Tapestry.currentFocusField) {
                         $(document).trigger(Tapestry.FOCUS_CHANGE_EVENT);
                         Tapestry.currentFocusField = element[0];
                     }
