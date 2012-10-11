@@ -66,6 +66,9 @@
 								"update", spec);
 
 					}
+					var event = jQuery.Event("success");
+					event.fileName = fileName;
+					$(document.getElementById(this.elementId)).trigger(event);
 
 				},
 

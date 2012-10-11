@@ -1,8 +1,10 @@
 package org.got5.tapestry5.jquery.services;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tapestry5.services.HttpServletRequestFilter;
@@ -23,7 +25,17 @@ public class AjaxUploadServletRequestFilter implements HttpServletRequestFilter 
             decoder.setupUploadedFile(request);
         }
 
-        return handler.service(request, response);
+        return handler.service(new HttpServletRequestWrapper(request) {
+        	@Override
+        	public void setCharacterEncoding(String enc)
+        			throws UnsupportedEncodingException {
+        		try {
+        			super.setCharacterEncoding(enc);
+        		} catch(Exception e) {
+        			
+        		}
+        	}
+        }, response);
     }
 
 }

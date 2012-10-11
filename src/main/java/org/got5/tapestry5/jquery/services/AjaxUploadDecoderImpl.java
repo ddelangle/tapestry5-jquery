@@ -6,7 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.internal.TapestryInternalUtils;
+import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.upload.internal.services.UploadedFileItem;
 import org.apache.tapestry5.upload.services.UploadedFile;
@@ -19,10 +21,13 @@ public class AjaxUploadDecoderImpl implements AjaxUploadDecoder {
     public static final String AJAX_UPLOAD_HEADER = "X-File-Name";
 
     private FileItemFactory fileItemFactory;
+    
+    private String applicationCharset;
 
-    public AjaxUploadDecoderImpl(FileItemFactory fileItemFactory) {
+    public AjaxUploadDecoderImpl(FileItemFactory fileItemFactory, @Symbol(SymbolConstants.CHARSET) String applicationCharset) {
 
         this.fileItemFactory = fileItemFactory;
+        this.applicationCharset = applicationCharset;
     }
 
     public boolean isAjaxUploadRequest(HttpServletRequest request) {
@@ -40,6 +45,7 @@ public class AjaxUploadDecoderImpl implements AjaxUploadDecoder {
         String fieldName = request.getHeader(AJAX_UPLOAD_HEADER);
         FileItem item = fileItemFactory.createItem(fieldName, request.getContentType(), false, request.getParameter(JQueryComponentConstants.FILE_UPLOAD_PARAMETER));
         try {
+        	request.setCharacterEncoding(applicationCharset);
             TapestryInternalUtils.copy(request.getInputStream(), item.getOutputStream());
         } catch (IOException e) {
             throw new RuntimeException("Could not copy request's input stream to file", e);
